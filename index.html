@@ -1,0 +1,65 @@
+<!--
+
+    Build using JSFeat (http://inspirit.github.com/jsfeat/)
+    and delaunay.js (https://github.com/ironwallaby/delaunay).
+
+-->    
+
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="WebRTC Video Feature Detection/Delaunay Triangulation">
+        <meta name="author" content="Scott Garner">
+        <title>Tri Me</title>
+
+        <link rel="stylesheet" type="text/css" href="css/screen.css"/>
+
+    </head>
+    <body>
+
+        <div id="message">Please allow camera access.</div>
+        <div id="credit"><a href="scott.j38.net">Scott Made This</a></div>
+
+        <video id="webcam" width="640" height="480" style="display:none;"></video>
+        
+        <canvas id="features" width="640" height="480"></canvas>        
+        <canvas id="triangles" width="640" height="480"></canvas>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/vendor/jsfeat-min.js"></script>
+        <script type="text/javascript" src="js/vendor/compatibility.js"></script>
+        <script type="text/javascript" src="js/vendor/dat.gui.min.js"></script>
+        <script type="text/javascript" src="js/vendor/delaunay.js"></script>
+
+        <script type="text/javascript" src="js/trime.js"></script>
+
+        <script type="text/javascript">
+
+        $(window).load(function() {
+
+            try {
+                compatibility.getUserMedia({video: true}, function(stream) {
+                    try {
+                        video.src = compatibility.URL.createObjectURL(stream);
+                    } catch (error) {
+                        video.src = stream;
+                    }
+
+                    video.addEventListener('canplay', function() {
+                        video.removeEventListener('canplay');
+                        init(); 
+                        $("#message").hide();
+                    }, true);
+                }, function (error) {
+                    $("#message").html("WebRTC not available.");
+                });
+            } catch (error) {
+                $("#message").html("WebRTC failed.");
+            }
+
+        });
+        </script>
+    </body>
+</html>
