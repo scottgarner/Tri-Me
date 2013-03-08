@@ -37,14 +37,18 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -144px;
+    margin-left: -156px;
     margin-top: -26px;
 
-    width: 256px;
+    width: 280px;
     height: 20px;
     text-align: center;
     padding: 16px;
     background: #222;
+    color: #efefef;
+}
+
+#message a {
     color: #efefef;
 }
 

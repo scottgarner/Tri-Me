@@ -29,7 +29,7 @@
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script type="text/javascript" src="js/vendor/jsfeat-min.js"></script>
-        <script type="text/javascript" src="js/vendor/compatibility.js"></script>
+        <script type="text/javascript" src="js/vendor/modernizr.js"></script>
         <script type="text/javascript" src="js/vendor/dat.gui.min.js"></script>
         <script type="text/javascript" src="js/vendor/delaunay.js"></script>
         <script type="text/javascript" src="js/vendor/FileSaver.min.js"></script>
@@ -41,24 +41,65 @@
 
         $(window).load(function() {
 
-            try {
-                compatibility.getUserMedia({video: true}, function(stream) {
-                    try {
-                        video.src = compatibility.URL.createObjectURL(stream);
-                    } catch (error) {
-                        video.src = stream;
+            if (Modernizr.getusermedia) {
+
+                navigator.getUserMedia =
+                    navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia;
+                
+                window.URL = window.URL ||
+                    window.webkitURL ||
+                    window.mozURL ||
+                    window.msURL;   
+
+                (function() {
+                    var lastTime = 0;
+                    var vendors = ['webkit', 'moz'];
+                    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+                        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+                        window.cancelAnimationFrame =
+                          window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
                     }
 
-                    video.addEventListener('canplay', function() {
-                        video.removeEventListener('canplay');
+                    if (!window.requestAnimationFrame)
+                        window.requestAnimationFrame = function(callback, element) {
+                            var currTime = new Date().getTime();
+                            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                              timeToCall);
+                            lastTime = currTime + timeToCall;
+                            return id;
+                        };
+
+                    if (!window.cancelAnimationFrame)
+                        window.cancelAnimationFrame = function(id) {
+                            clearTimeout(id);
+                        };
+                }());
+
+                navigator.getUserMedia({video: true},
+                    function(stream) {
+                            
+                        console.log("WHAT");
+
+                        if (video.mozSrcObject !== undefined) {
+                            video.mozSrcObject = stream;
+                        } else {
+                            video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+                        }                        
+
                         init(); 
                         $("#message").hide();
-                    }, true);
-                }, function (error) {
-                    $("#message").html("WebRTC not available.");
-                });
-            } catch (error) {
-                $("#message").html("WebRTC failed.");
+                    },
+                    function (error) {
+                        console.log("WHAT");
+                    }
+                );
+
+            } else {
+                $("#message").html("WebRTC not supported. Try <a href='http://google.com/chrome/'>Chrome</a>.");
             }
 
         });

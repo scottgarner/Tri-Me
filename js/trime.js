@@ -39,7 +39,7 @@ function init() {
 
     setupControls();
 
-	compatibility.requestAnimationFrame(animate);  
+	requestAnimationFrame(animate);  
 
 	$(window).bind('resize', resize);
 	resize();
@@ -82,7 +82,7 @@ function setupControls() {
 
 
 function animate() {
-    compatibility.requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
     if (video.readyState === video.HAVE_ENOUGH_DATA) {
 
     	featureContext.drawImage(video, 0, 0, 640, 480);
