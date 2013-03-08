@@ -8,7 +8,8 @@ var options = {
 	hueShift: 0,
 	invertLightness: false,
 	invertSaturation: false,
-	showVideo: false
+	showVideo: false,
+    saveImage: function() { saveImage() }
 }
 
 //
@@ -71,6 +72,8 @@ function setupControls() {
     	else
     		$("#features").hide();
     });
+
+    gui.add(options, "saveImage");
 
     gui.close();
 }
@@ -197,6 +200,14 @@ function resize (event) {
 	$("#triangles").css('left', window.innerWidth/2 - newWidth/2  );
 	$("#triangles").css('top', window.innerHeight/2 - newHeight/2  );
 
+}
+
+//
+
+function saveImage() {
+    triangleCanvas.toBlob(function(blob) {
+        saveAs(blob, "trime.png");
+    }, "image/png");
 }
 
 // http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
