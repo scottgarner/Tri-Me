@@ -6,31 +6,15 @@ html {
 }
 
 body {
+    margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
     background: #efefef;
-    font-family: Helvetica, sans-serif;
-
-}
-
-#credit {
-    opacity: 50%;
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    z-index: 100;
-    font-size: .8em;
-}
-
-#credit a {
-    text-decoration: none;
-    color: #222;
-}
-
-#credit a:hover {
-    text-decoration: underline;
-    color: #000;
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-weight: 300;
+   font-size: 12pt;
 }
 
 #message {
@@ -41,15 +25,58 @@ body {
     margin-top: -26px;
 
     width: 280px;
-    height: 20px;
     text-align: center;
     padding: 16px;
-    background: #222;
+    background: #1a1a1a;
     color: #efefef;
 }
 
 #message a {
     color: #efefef;
+}
+
+#container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 32px;
+    overflow: hidden;
+}
+
+#banner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    bottom: 0;
+    border-top: 1px solid black;
+    background: #1a1a1a;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    font-size: 9pt;
+}
+
+#banner a {
+    text-decoration: none;
+    color: white;
+}
+
+div.alert {
+    display: none;
+}
+
+div.alert.visible {
+    display: initial;
+}
+
+div.alert i.fa {
+  padding-right: 4px;
+}
+
+div.alert i.fa-lg {
+  vertical-align: -5%;
 }
 
 #features {
@@ -64,7 +91,6 @@ body {
 }
 
 #triangles {
-
     position: absolute;
     top: 0;
     left: 0;

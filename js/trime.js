@@ -186,19 +186,21 @@ function drawCorners(corners, count, img, step) {
 
 function resize (event) {
 
-	var newWidth = window.innerWidth;
-	var newHeight = window.innerWidth/triangleCanvas.width * triangleCanvas.height;
+    console.log($("#container").width());
 
-	if (newHeight < window.innerHeight) {
-		newHeight = window.innerHeight;
-		newWidth = window.innerHeight/triangleCanvas.height * triangleCanvas.width;
+	var newWidth = $("#container").width();
+	var newHeight = $("#container").width()/triangleCanvas.width * triangleCanvas.height;
+
+	if (newHeight < $("#container").height()) {
+		newHeight = $("#container").height();
+		newWidth = $("#container").height()/triangleCanvas.height * triangleCanvas.width;
 	}
 
 	$("#triangles").width(newWidth);
 	$("#triangles").height(newHeight);
 
-	$("#triangles").css('left', window.innerWidth/2 - newWidth/2  );
-	$("#triangles").css('top', window.innerHeight/2 - newHeight/2  );
+	$("#triangles").css('left', $("#container").width()/2 - newWidth/2  );
+	$("#triangles").css('top', $("#container").height()/2 - newHeight/2  );
 
 }
 
